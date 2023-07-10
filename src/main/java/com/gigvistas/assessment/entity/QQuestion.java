@@ -32,7 +32,6 @@ public class QQuestion {
     @OneToMany(mappedBy="qId")
     private Set <QMcq> mcqQuestion;
 
-    //why isnt this working
     @OneToMany (mappedBy="qId")
     private Set <ResQuestion> responses;
    

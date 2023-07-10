@@ -21,7 +21,6 @@ public class ResQuestion {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer resId;
 
-    //not working
     @ManyToOne
     @JoinColumn(name="q_id", nullable=false)
     private QQuestion qId;
@@ -31,7 +30,7 @@ public class ResQuestion {
 
     @OneToMany (mappedBy="resId")
     private Set <ResMcq> responseMcqs;
-    
+
     private String resType;
 
     private Date lastModified;

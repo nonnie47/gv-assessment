@@ -1,7 +1,7 @@
 //ask about the .entity thing
 package com.gigvistas.assessment.entity;
 
-//check to see if unneccessary and/or wrong
+
 import java.util.Date;
 import java.util.*;
 
@@ -21,7 +21,6 @@ import lombok.Data;
 public class QAssessment {
 
     // a_id --> aId
-    //check to see if this is neccessary as AI is on in mySQL
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int aId;
