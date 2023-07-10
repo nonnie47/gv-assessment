@@ -15,6 +15,7 @@ import java.util.Date;
 @Repository
 public interface ResQuestionRepository extends CrudRepository <ResQuestion,Integer> {
     public List<ResQuestion> findAll();
+    public List <ResQuestion> findByresId(Integer resId);
     public List<ResQuestion> findByqId(QQuestion qId);
     public List<ResQuestion> findByresType(String resType);
     public List<ResQuestion> findBylastModified(Date lastModified);
