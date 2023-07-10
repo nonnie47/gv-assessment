@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AssessmentApplication<assessment>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.gigvistas.assessment.AssessmentApplication",
+            "projectName": "assessment",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
