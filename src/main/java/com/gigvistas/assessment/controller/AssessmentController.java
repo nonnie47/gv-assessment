@@ -15,6 +15,8 @@ import com.gigvistas.assessment.repository.ResQuestionRepository;
 import com.gigvistas.assessment.entity.ResQuestion;
 import com.gigvistas.assessment.repository.ResMcqRepository;
 import com.gigvistas.assessment.entity.ResMcq;
+import com.gigvistas.assessment.repository.ResTextRepository;
+import com.gigvistas.assessment.entity.ResText;
 
 import java.util.Date;
 
@@ -28,6 +30,7 @@ public class AssessmentController {
 	QMcqRepository mcqRepository;
 	ResQuestionRepository rqRepository;
 	ResMcqRepository rmcqRepository;
+	ResTextRepository rtRepository;
 	
 
 
@@ -160,5 +163,21 @@ public class AssessmentController {
 	@GetMapping("resMcqByresId")
 	public List <ResMcq> findByResId(ResQuestion resId){
 		return rmcqRepository.findByresId(resId);
+	}
+
+	//resText methods
+	@GetMapping("/AllResTexts")
+	public List <ResText> findAllResText(){
+		return rtRepository.findAll();
+	}
+
+	@GetMapping("/resTextbyResTextId")
+	public List <ResText> findByResTextId(Integer resTextId){
+		return rtRepository.findByresTextId(resTextId);
+	}
+
+	@GetMapping("/resTextByresId")
+	public List <ResText> findByResTextByResId(ResQuestion resId){
+		return rtRepository.findByresId(resId);
 	}
 }
