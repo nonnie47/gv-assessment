@@ -20,8 +20,9 @@ public class AssessmentController {
 
 	@Autowired
 	QAssessmentRepository qaRepository;
-	QMcqRepository mcqRepository;
 	QQuestionRepository qRepository;
+	QMcqRepository mcqRepository;
+	
 
 
 	
@@ -61,15 +62,33 @@ public class AssessmentController {
 		return qaRepository.findBymodifiedBy(modifiedBy);
 	}
 
+
+	@GetMapping ("/allQuestions")
+	public List <QQuestion> findAllQuestions (){
+		return qRepository.findAll();
+	}
+
+	@GetMapping("/questionsByQId")
+	public List <QQuestion> findByQId (int qId){
+		return qRepository.findByqId(qId);
+	}
+
+	@GetMapping("/questionsByQType")
+	public List <QQuestion> findByQType(String qType){
+		return qRepository.findByqType(qType);
+	}
+
+	@GetMapping ("/questionsByQRequired")
+	public List <QQuestion> findByQRequired(boolean qRequired){
+		return qRepository.findByqRequired(qRequired);
+	}
+
 	@GetMapping("/mcqOptions")
 	public List <QMcq> findByMcqId(int mcqId){
 		return mcqRepository.findByqMcqId(mcqId);
 	}
 
-	@GetMapping("/questionsById")
-	public List <QQuestion> findByQId (int qId){
-		return qRepository.findByqId(qId);
-	}
+	
 
 
 	
