@@ -12,6 +12,8 @@ import com.gigvistas.assessment.repository.QMcqRepository;
 import com.gigvistas.assessment.entity.QQuestion;
 import com.gigvistas.assessment.repository.QQuestionRepository;
 
+import java.util.Date;
+
 
 @RestController
 public class AssessmentController {
@@ -25,23 +27,48 @@ public class AssessmentController {
 	
 
     @GetMapping("/")
-	public List<QAssessment> index() {
+	public List<QAssessment> findAll() {
 		return qaRepository.findAll();
 	}
 
 	@GetMapping("/assessmentById")
-	public List <QAssessment> assessmentIndex (int index){
+	public List <QAssessment> findByAId (int index){
 		return qaRepository.findByaId(index);
 	}
 
+	@GetMapping ("/assessmentByJobPostId")
+	public List <QAssessment> findByJobPostId(int jobPostId){
+		return qaRepository.findByjobPostId(jobPostId);
+	}
+
+	@GetMapping ("/assessmentByAStatus")
+    public List <QAssessment> findByAStatus(String aStatus){
+		return qaRepository.findByaStatus(aStatus);
+	}
+
+	@GetMapping ("/assessmentByALabel")
+	public List <QAssessment> findByaLabel(String aLabel){
+		return qaRepository.findByaLabel(aLabel);
+	}
+
+	@GetMapping ("/assessmentByLastModified")
+	public List <QAssessment> findBylastModified(Date lastModified){
+		return qaRepository.findBylastModified(lastModified);
+	}
+
+	@GetMapping ("/assessmentByModifiedBy")
+	public List <QAssessment> findByModifiedBy(String modifiedBy){
+		return qaRepository.findBymodifiedBy(modifiedBy);
+	}
+
 	@GetMapping("/mcqOptions")
-	public List <QMcq> mcqIndex (int index){
-		return mcqRepository.findByqMcqId(index);
+	public List <QMcq> findByMcqId(int mcqId){
+		return mcqRepository.findByqMcqId(mcqId);
 	}
 
 	@GetMapping("/questionsById")
-	public List <QQuestion> questionIndex(int index){
-		return qRepository.findByqId(index);
+	public List <QQuestion> findByQId (int qId){
+		return qRepository.findByqId(qId);
 	}
 
 
