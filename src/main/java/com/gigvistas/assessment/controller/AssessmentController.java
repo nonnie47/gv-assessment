@@ -11,6 +11,8 @@ import com.gigvistas.assessment.entity.QMcq;
 import com.gigvistas.assessment.repository.QMcqRepository;
 import com.gigvistas.assessment.entity.QQuestion;
 import com.gigvistas.assessment.repository.QQuestionRepository;
+import com.gigvistas.assessment.repository.ResQuestionRepository;
+import com.gigvistas.assessment.entity.ResQuestion;
 
 import java.util.Date;
 
@@ -22,6 +24,7 @@ public class AssessmentController {
 	QAssessmentRepository qaRepository;
 	QQuestionRepository qRepository;
 	QMcqRepository mcqRepository;
+	ResQuestionRepository rqRepository;
 	
 
 
@@ -67,6 +70,7 @@ public class AssessmentController {
 		return qRepository.findAll();
 	}
 
+	//question methods
 	@GetMapping("/questionsByQId")
 	public List <QQuestion> findByQId (int qId){
 		return qRepository.findByqId(qId);
@@ -82,6 +86,7 @@ public class AssessmentController {
 		return qRepository.findByqRequired(qRequired);
 	}
 
+	//Mcq methods
     @GetMapping("/allMcqs")
 	public List<QMcq> findAllMcqs(){
 		return mcqRepository.findAll();
@@ -102,6 +107,29 @@ public class AssessmentController {
 		return mcqRepository.findByisCorrect(isCorrect);
 	}	
 
+	//ResQuestion methods
+	@GetMapping("/resByResId")
+    public List <ResQuestion> findAllResponses(){
+		return rqRepository.findAll();
+	}
 
-	
+	@GetMapping("/resByQId")
+	public List <ResQuestion> findResByQId(QQuestion qId){
+		return rqRepository.findByqId(qId);
+	}
+
+	@GetMapping("/resByResType")
+	public List <ResQuestion> findByResType(String resType){
+		return rqRepository.findByresType(resType);
+	}
+
+	@GetMapping("/resByLastModified")
+	public List <ResQuestion> findResByLastModified(Date lastModified){
+		return rqRepository.findBylastModified(lastModified);
+	}
+
+	@GetMapping("/resByUserCode")
+    public List <ResQuestion> findResByUserCode(String userCode){
+		return rqRepository.findByuserCode(userCode);
+	}	
 }
