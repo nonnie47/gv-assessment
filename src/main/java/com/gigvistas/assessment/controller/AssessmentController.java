@@ -62,8 +62,7 @@ public class AssessmentController {
 		return qaRepository.findBymodifiedBy(modifiedBy);
 	}
 
-
-	@GetMapping ("/allQuestions")
+    @GetMapping ("/allQuestions")
 	public List <QQuestion> findAllQuestions (){
 		return qRepository.findAll();
 	}
@@ -83,12 +82,25 @@ public class AssessmentController {
 		return qRepository.findByqRequired(qRequired);
 	}
 
-	@GetMapping("/mcqOptions")
+    @GetMapping("/allMcqs")
+	public List<QMcq> findAllMcqs(){
+		return mcqRepository.findAll();
+	}
+
+	@GetMapping("/mcqBymcqId")
 	public List <QMcq> findByMcqId(int mcqId){
 		return mcqRepository.findByqMcqId(mcqId);
 	}
 
-	
+	@GetMapping("/mcqByqOption")
+	public List <QMcq> findByMcqOption(String qOption){
+		return mcqRepository.findByqOption(qOption);
+	}
+
+	@GetMapping("/mcqByIsCorrect")
+    public List <QMcq> findByisCorrect (boolean isCorrect){
+		return mcqRepository.findByisCorrect(isCorrect);
+	}	
 
 
 	

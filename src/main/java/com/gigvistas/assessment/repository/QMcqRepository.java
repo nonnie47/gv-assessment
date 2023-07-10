@@ -13,5 +13,7 @@ import java.util.List;
 public interface QMcqRepository extends CrudRepository<QMcq,Integer> {
     public List<QMcq> findAll();
     public List<QMcq> findByqMcqId(Integer qMcqId);
+    public List<QMcq> findByqOption (String qOption);
+    public List<QMcq> findByisCorrect (boolean isCorrect);
 }
 
