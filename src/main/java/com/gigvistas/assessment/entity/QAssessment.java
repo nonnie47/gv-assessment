@@ -26,7 +26,7 @@ public class QAssessment {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int aId;
 
-    @OneToMany(mappedBy="assessment")
+    @OneToMany(mappedBy="aId")
     private Set <QQuestion> questions;
 
 

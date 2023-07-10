@@ -6,9 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 //import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import java.util.*;
 
 @Entity
 @Table(name = "q_mcq")
@@ -22,7 +24,10 @@ public class QMcq {
     
     @ManyToOne
     @JoinColumn(name="q_id", nullable=false)
-    private QQuestion mcqQuestion;
+    private QQuestion qId;
+
+    @OneToMany(mappedBy="qMcqId")
+    private Set <ResMcq> responsesMcq;
 
     private String qOption;
 

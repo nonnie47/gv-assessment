@@ -5,8 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Data;
+import java.util.*;
 
 @Entity
 @Table(name = "res_question")
@@ -17,8 +21,17 @@ public class ResQuestion {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer resId;
 
-    private Integer q_id;
+    //not working
+    @ManyToOne
+    @JoinColumn(name="q_id", nullable=false)
+    private QQuestion qId;
 
+    @OneToMany (mappedBy="resId")
+    private Set <ResText> responseTexts;
+
+    @OneToMany (mappedBy="resId")
+    private Set <ResMcq> responseMcqs;
+    
     private String resType;
 
     private Date lastModified;
