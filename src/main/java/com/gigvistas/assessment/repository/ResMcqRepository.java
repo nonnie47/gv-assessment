@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import com.gigvistas.assessment.entity.QMcq;
 
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import com.gigvistas.assessment.entity.ResMcq;
 import com.gigvistas.assessment.entity.ResQuestion;
 

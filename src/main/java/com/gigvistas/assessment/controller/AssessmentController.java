@@ -1,9 +1,16 @@
 package com.gigvistas.assessment.controller;
 import java.util.List;
+import java.lang.Integer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.gigvistas.assessment.entity.QAssessment;
 import com.gigvistas.assessment.repository.QAssessmentRepository;
@@ -17,8 +24,11 @@ import com.gigvistas.assessment.repository.ResMcqRepository;
 import com.gigvistas.assessment.entity.ResMcq;
 import com.gigvistas.assessment.repository.ResTextRepository;
 import com.gigvistas.assessment.entity.ResText;
+import com.gigvistas.assessment.entity.QAssessmentObj;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -32,6 +42,8 @@ public class AssessmentController {
 	ResMcqRepository rmcqRepository;
 	ResTextRepository rtRepository;
 	
+	//added from article, check to see how to add it in the databse instead
+	Map<Integer, QAssessment> assessmentData = new HashMap<Integer, QAssessment>();
 
 
 	
@@ -42,12 +54,12 @@ public class AssessmentController {
 	}
 
 	@GetMapping("/assessmentById")
-	public List <QAssessment> findByAId (int index){
+	public List <QAssessment> findByAId (Integer index){
 		return qaRepository.findByaId(index);
 	}
 
 	@GetMapping ("/assessmentByJobPostId")
-	public List <QAssessment> findByJobPostId(int jobPostId){
+	public List <QAssessment> findByJobPostId(Integer jobPostId){
 		return qaRepository.findByjobPostId(jobPostId);
 	}
 
@@ -78,7 +90,7 @@ public class AssessmentController {
 
 	//question methods
 	@GetMapping("/questionsByQId")
-	public List <QQuestion> findByQId (int qId){
+	public List <QQuestion> findByQId (Integer qId){
 		return qRepository.findByqId(qId);
 	}
 
@@ -99,7 +111,7 @@ public class AssessmentController {
 	}
 
 	@GetMapping("/mcqBymcqId")
-	public List <QMcq> findByMcqId(int mcqId){
+	public List <QMcq> findByMcqId(Integer mcqId){
 		return mcqRepository.findByqMcqId(mcqId);
 	}
 
@@ -179,5 +191,19 @@ public class AssessmentController {
 	@GetMapping("/resTextByresId")
 	public List <ResText> findByResTextByResId(ResQuestion resId){
 		return rtRepository.findByresId(resId);
+	}
+
+	//finding questions in an assessment
+	@GetMapping("/questionsInAnAssessment")
+	public List <QQuestion> findQuestionsByAssessment(QAssessment aId){
+		return qRepository.findByaId(aId);
+	}
+
+	//added from article
+	@RequestMapping(value = RestURIConstants.CREATE_ASSESSMENT, method = RequestMethod.POST)
+	public @ResponseBody QAssessment createAssessment(@RequestBody QAssessment assessment){
+		assessment.setaId(assessment.getAId());
+		return qaRepository.save(assessment);
+		//return assessment;
 	}
 }

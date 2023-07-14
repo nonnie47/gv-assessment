@@ -4,6 +4,7 @@ package com.gigvistas.assessment.entity;
 
 import java.util.Date;
 import java.util.*;
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class QAssessment {
     // a_id --> aId
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int aId;
+    private Integer aId;
 
     @OneToMany(mappedBy="aId")
     private Set <QQuestion> questions;
@@ -52,8 +53,14 @@ public class QAssessment {
     }
 
     public QAssessment(int aId,int jobPostId, String aLabel){
-        //this.aId=aId;
+        this.aId=aId;
         this.jobPostId=jobPostId;
         this.aLabel=aLabel;
     }
+
+    public void setaId(int aId){
+        this.aId=aId;
+    }
+
+    
 }
