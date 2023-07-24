@@ -2,7 +2,9 @@ package com.gigvistas.assessment.controller;
 import java.util.List;
 import java.lang.Integer;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.gigvistas.assessment.dto.DtoAssessment;
 import com.gigvistas.assessment.entity.QAssessment;
 import com.gigvistas.assessment.repository.QAssessmentRepository;
 import com.gigvistas.assessment.entity.QMcq;
@@ -24,15 +26,16 @@ import com.gigvistas.assessment.repository.ResMcqRepository;
 import com.gigvistas.assessment.entity.ResMcq;
 import com.gigvistas.assessment.repository.ResTextRepository;
 import com.gigvistas.assessment.entity.ResText;
-import com.gigvistas.assessment.entity.QAssessmentObj;
+
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 @RestController
 public class AssessmentController {
+
+	
 
 	@Autowired
 	QAssessmentRepository qaRepository;
@@ -41,9 +44,10 @@ public class AssessmentController {
 	ResQuestionRepository rqRepository;
 	ResMcqRepository rmcqRepository;
 	ResTextRepository rtRepository;
+
+	@Autowired
+	private ModelMapper modelMapper;
 	
-	//added from article, check to see how to add it in the databse instead
-	Map<Integer, QAssessment> assessmentData = new HashMap<Integer, QAssessment>();
 
 
 	
@@ -201,9 +205,13 @@ public class AssessmentController {
 
 	//added from article
 	@RequestMapping(value = RestURIConstants.CREATE_ASSESSMENT, method = RequestMethod.POST)
-	public @ResponseBody QAssessment createAssessment(@RequestBody QAssessment assessment){
-		assessment.setaId(assessment.getAId());
-		return qaRepository.save(assessment);
-		//return assessment;
+	public @ResponseBody QAssessment createAssessment(@RequestBody DtoAssessment dtoAssessment){
+		//DTO to Entity
+		QAssessment qAssessmentRequest = modelMapper.map(dtoAssessment,QAssessment.class);
+        QAssessment qAssessment = qaRepository.save(qAssessmentRequest);
+        
+		//Entity to DTO
+		//DtoAssessment assessmentResponse = modelMapper.map(qAssessment, DtoAssessment.class);
+		return qAssessment;
 	}
 }

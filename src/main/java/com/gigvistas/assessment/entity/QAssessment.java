@@ -23,7 +23,7 @@ public class QAssessment {
 
     // a_id --> aId
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer aId;
 
     @OneToMany(mappedBy="aId")
