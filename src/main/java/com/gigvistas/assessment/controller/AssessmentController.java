@@ -4,16 +4,18 @@ import java.lang.Integer;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigvistas.assessment.dto.DtoAssessment;
+import com.gigvistas.assessment.dto.DtoQuestion;
+import com.gigvistas.assessment.dto.McqDto;
 import com.gigvistas.assessment.entity.QAssessment;
 import com.gigvistas.assessment.repository.QAssessmentRepository;
 import com.gigvistas.assessment.entity.QMcq;
@@ -27,8 +29,9 @@ import com.gigvistas.assessment.entity.ResMcq;
 import com.gigvistas.assessment.repository.ResTextRepository;
 import com.gigvistas.assessment.entity.ResText;
 
-
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 
 
@@ -39,6 +42,8 @@ public class AssessmentController {
 
 	@Autowired
 	QAssessmentRepository qaRepository;
+	
+	@Autowired
 	QQuestionRepository qRepository;
 	QMcqRepository mcqRepository;
 	ResQuestionRepository rqRepository;
@@ -69,12 +74,12 @@ public class AssessmentController {
 
 	@GetMapping ("/assessmentByAStatus")
     public List <QAssessment> findByAStatus(String aStatus){
-		return qaRepository.findByaStatus(aStatus);
+		return qaRepository.findBystatus(aStatus);
 	}
 
 	@GetMapping ("/assessmentByALabel")
 	public List <QAssessment> findByaLabel(String aLabel){
-		return qaRepository.findByaLabel(aLabel);
+		return qaRepository.findBylabel(aLabel);
 	}
 
 	@GetMapping ("/assessmentByLastModified")
@@ -100,12 +105,12 @@ public class AssessmentController {
 
 	@GetMapping("/questionsByQType")
 	public List <QQuestion> findByQType(String qType){
-		return qRepository.findByqType(qType);
+		return qRepository.findByType(qType);
 	}
 
 	@GetMapping ("/questionsByQRequired")
 	public List <QQuestion> findByQRequired(boolean qRequired){
-		return qRepository.findByqRequired(qRequired);
+		return qRepository.findByRequired(qRequired);
 	}
 
 	//Mcq methods
@@ -210,8 +215,27 @@ public class AssessmentController {
 		QAssessment qAssessmentRequest = modelMapper.map(dtoAssessment,QAssessment.class);
         QAssessment qAssessment = qaRepository.save(qAssessmentRequest);
         
-		//Entity to DTO
-		//DtoAssessment assessmentResponse = modelMapper.map(qAssessment, DtoAssessment.class);
 		return qAssessment;
+	}
+
+	@RequestMapping(value= RestURIConstants.CREATE_QUESTIONS, method=RequestMethod.POST)
+	public @ResponseBody QAssessment addQuestions(@RequestBody DtoAssessment dtoAssessment){
+		if (qaRepository.findByaId(dtoAssessment.getAId())==null){
+			qaRepository.save(createAssessment(dtoAssessment));
+		}
+		ArrayList <DtoQuestion> questionList= dtoAssessment.getQuestions();
+		for ( DtoQuestion question: questionList){
+             qRepository.save(modelMapper.map(question, QQuestion.class));
+			 if (question.getType().equalsIgnoreCase("mcq")){
+				ArrayList <McqDto> mcqList= question.getMcqOptions();
+				for (McqDto option:mcqList){
+					mcqRepository.save(modelMapper.map(option, QMcq.class));
+				}
+			 }
+		}
+		
+		
+		return  modelMapper.map(dtoAssessment,QAssessment.class);
+
 	}
 }

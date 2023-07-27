@@ -22,7 +22,7 @@ import java.util.*;
 public class QQuestion {
     
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(insertable=false, updatable=false)
     private Integer qId;
     
@@ -31,15 +31,16 @@ public class QQuestion {
     private QAssessment aId;
 
     @OneToMany(mappedBy="qId")
-    private Set <QMcq> mcqQuestion;
+    private Set <QMcq> mcqOptions;
 
     @OneToMany (mappedBy="qId")
     private Set <ResQuestion> responses;
    
-    private String qDescription;
+    private String description;
 
-    private String qType;
+    private String type;
 
-    private boolean qRequired;
-
+    private boolean required;
+    
+     
 }

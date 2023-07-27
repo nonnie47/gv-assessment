@@ -11,7 +11,7 @@ import java.util.List;
 public interface QQuestionRepository extends CrudRepository<QQuestion,Integer> {
     public List<QQuestion> findAll();
     public List <QQuestion> findByqId(Integer qId);
-    public List <QQuestion> findByqType(String qType);
-    public List <QQuestion> findByqRequired(boolean qRequired);
+    public List <QQuestion> findByType(String qType);
+    public List <QQuestion> findByRequired(boolean qRequired);
     public List <QQuestion> findByaId(QAssessment aId);
 }

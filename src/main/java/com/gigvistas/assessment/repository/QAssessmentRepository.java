@@ -16,8 +16,8 @@ public interface QAssessmentRepository extends CrudRepository<QAssessment,Intege
     public List<QAssessment> findAll();
     public List<QAssessment> findByaId(Integer aId);
     public List<QAssessment> findByjobPostId(Integer jobPostId);
-    public List<QAssessment> findByaStatus(String aStatus);
-    public List<QAssessment> findByaLabel(String aLabel);
+    public List<QAssessment> findBystatus(String aStatus);
+    public List<QAssessment> findBylabel(String aLabel);
     public List<QAssessment> findBylastModified(Date lastModified);
     public List<QAssessment> findBymodifiedBy(String modifiedBy);
     

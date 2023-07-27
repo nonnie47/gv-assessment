@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.*;
 //import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,20 +28,23 @@ public class QAssessment {
     private Integer aId;
 
     @OneToMany(mappedBy="aId")
-    private Set <QQuestion> questions;
+    public Set <QQuestion> questions;
 
 
     // job_post_id --> jobPostId
     private Integer jobPostId;
     
     // a_status --> aStatus
-    private String aStatus;
+    @Column(name = "a_status")
+    private String status;
     
     // a_label --> aLabel
-    private String aLabel;
+    @Column(name = "a_label")
+    private String label;
 
     // a_description --> aDescription
-    private String aDescription;
+    @Column(name = "a_description")
+    private String description;
 
     //last_modified --> lastModified
     private Date lastModified;
@@ -55,11 +59,15 @@ public class QAssessment {
     public QAssessment(int aId,int jobPostId, String aLabel){
         this.aId=aId;
         this.jobPostId=jobPostId;
-        this.aLabel=aLabel;
+        this.label=aLabel;
     }
 
     public void setaId(int aId){
         this.aId=aId;
+    }
+
+    public Integer getaId(){
+        return aId;
     }
 
     
